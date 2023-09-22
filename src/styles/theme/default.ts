@@ -18,5 +18,6 @@ export const COLORS = {
   "base-button": "#E6E5E5",
   "base-input": "#EDEDED",
   "base-card": "#F3F2F2",
+  red: "#d72c1b",
   background: "#FAFAFA",
 };

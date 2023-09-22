@@ -88,6 +88,20 @@ export const WrapperInputs = styled.div`
 
   width: 100%;
 
+  span {
+    font-size: ${fontRoboto.textXS};
+    font-weight: 400;
+    color: ${({ theme }) => theme["red"]};
+  }
+
+  .error {
+    border: 1px solid ${({ theme }) => theme["red"]};
+
+    ::-webkit-input-placeholder {
+      color: ${({ theme }) => theme["red"]};
+    }
+  }
+
   @media (min-width: 768px) {
     div:nth-child(1),
     input[id="cep"] {
@@ -101,32 +115,11 @@ export const WrapperInputs = styled.div`
   }
 
   .footer_wrapperInputs {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 1.6rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
     @media (min-width: 768px) {
-      grid-template-areas: "A A B B B" "C C D D F";
-
-      div:nth-child(1) {
-        grid-area: A;
-      }
-
-      div:nth-child(2) {
-        grid-area: B;
-      }
-
-      div:nth-child(3) {
-        grid-area: C;
-      }
-
-      div:nth-child(4) {
-        grid-area: D;
-      }
-
-      div:nth-child(5) {
-        grid-area: F;
-      }
     }
   }
 `;

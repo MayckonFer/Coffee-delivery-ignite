@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   CheckoutContainer,
   FormCheckoutContainer,
@@ -17,15 +18,42 @@ import {
   CreditCard,
 } from "@phosphor-icons/react";
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { ToastContainer } from "react-toastify";
+import { useEffect } from "react";
+import axios from "axios";
+
 import { InputComponent } from "../../components/InputComponent";
 import { ButtonComponent } from "../../components/ButtomComponent";
 import { CoffeInTheCart } from "../../components/CoffeInTheCart";
+
 import { useCart } from "../../hooks/useCartContext";
 import { CartState } from "../../interface";
-import { ToastContainer } from "react-toastify";
+
+const schemaForm = z.object({
+  cep: z.string().min(1, "Por favor, informe um CEP válido!"),
+  street: z.string().nonempty("Por favor, informe uma rua válida!"),
+  number: z.string().nonempty("Por favor, informe um número válido!"),
+  city: z.string().nonempty("Por favor, informe uma cidade válida!"),
+  state: z.string().nonempty("Por favor, informe um estado válido!"),
+  complement: z.string(),
+  district: z.string().min(1, "Por favor, informe um bairro válido!"),
+});
+
+type FormProps = z.infer<typeof schemaForm>;
 
 export function Checkout() {
   const { cart } = useCart() as CartState;
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormProps>({
+    resolver: zodResolver(schemaForm),
+  });
 
   const delivery = 3.5;
 
@@ -40,9 +68,13 @@ export function Checkout() {
 
   const valuefinal = totalValueCoffes + delivery;
 
+  function handleValidationForm(data: FormProps) {
+    console.log(data);
+  }
+
   return (
     <>
-      <CheckoutContainer>
+      <CheckoutContainer onSubmit={handleSubmit(handleValidationForm)}>
         <FormCheckoutContainer>
           <h2>Complete seu pedido</h2>
 
@@ -59,27 +91,49 @@ export function Checkout() {
             <WrapperInputs>
               <InputComponent
                 type="text"
-                id="cep"
-                maxLength={8}
                 placeholder="CEP"
+                maxLength={8}
+                {...register("cep")}
               />
+              {errors.cep && <span>{errors?.cep?.message}</span>}
 
-              <InputComponent type="text" id="street" placeholder="Rua" />
+              <InputComponent
+                type="text"
+                placeholder="Rua"
+                {...register("street")}
+              />
+              {errors.street && <span>{errors.street.message}</span>}
               <div className="footer_wrapperInputs">
-                <InputComponent type="text" id="number" placeholder="Número" />
                 <InputComponent
                   type="text"
-                  id="complement"
+                  placeholder="Número"
+                  {...register("number")}
+                />
+                {errors.number && <span>{errors.number.message}</span>}
+                <InputComponent
+                  type="text"
                   placeholder="Complemento"
                   text="Opcional"
+                  {...register("complement")}
                 />
                 <InputComponent
                   type="text"
-                  id="district"
                   placeholder="Bairro"
+                  {...register("district")}
                 />
-                <InputComponent type="city" id="city" placeholder="Cidade" />
-                <InputComponent type="text" id="uf" placeholder="UF" />
+                {errors.district && <span>{errors.district.message}</span>}
+                <InputComponent
+                  type="city"
+                  placeholder="Cidade"
+                  {...register("city")}
+                />
+                {errors.city && <span>{errors.city.message}</span>}
+                <InputComponent
+                  type="text"
+                  placeholder="UF"
+                  {...register("state")}
+                />
+                {errors.state && <span>{errors.state.message}</span>}
               </div>
             </WrapperInputs>
           </FormAdress>
@@ -163,7 +217,7 @@ export function Checkout() {
                 </li>
               </ul>
 
-              <button type="button" title="Confirmar Pedido">
+              <button type="submit" title="Confirmar Pedido">
                 Confirmar Pedido
               </button>
             </FooterCoffeSelected>

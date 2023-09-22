@@ -1,3 +1,4 @@
+import { ChangeEventHandler } from "react";
 import { ContainerInput } from "./styles";
 
 interface InputProps {
@@ -12,14 +13,15 @@ interface InputProps {
   disabled?: boolean;
   maxLength?: number;
   minLength?: number;
-  onChange?: () => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  className?: string;
 }
 
 export function InputComponent({ text, ...rest }: InputProps) {
   return (
     <ContainerInput>
       <input {...rest} />
-      <small>{text}</small>
+      {text !== "" ? <small>{text}</small> : ""}
     </ContainerInput>
   );
 }
