@@ -1,27 +1,17 @@
-import { ChangeEventHandler } from "react";
+import { InputHTMLAttributes, forwardRef } from "react";
 import { ContainerInput } from "./styles";
 
-interface InputProps {
-  type?: string;
-  placeholder?: string;
-  id?: string;
-  name?: string;
-  text?: string;
-  value?: string;
-  required?: boolean;
-  checked?: boolean;
-  disabled?: boolean;
-  maxLength?: number;
-  minLength?: number;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  className?: string;
-}
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+  textHelp?: string;
+};
 
-export function InputComponent({ text, ...rest }: InputProps) {
-  return (
-    <ContainerInput>
-      <input {...rest} />
-      {text !== "" ? <small>{text}</small> : ""}
-    </ContainerInput>
-  );
-}
+export const InputComponent = forwardRef<HTMLInputElement, InputProps>(
+  ({ type = "text", name = "", textHelp, ...props }, ref) => {
+    return (
+      <ContainerInput>
+        <input type={type} name={name} ref={ref} {...props} />
+        {textHelp && <small>{textHelp}</small>}
+      </ContainerInput>
+    );
+  }
+);

@@ -26,3 +26,26 @@ export interface ChildrenProps
       HTMLButtonElement
     >,
     React.AriaAttributes {}
+
+export interface Address {
+  methodPayment: string;
+  data?: {
+    cep?: string;
+    city?: string;
+    complement?: string;
+    district?: string;
+    number?: string;
+    state?: string;
+    street?: string;
+  };
+  payment?: string;
+}
+
+export interface AddressState {
+  address: Address;
+  setAddress: (newAddress: Address) => void;
+}
+
+export interface CartData {
+  address: Address;
+}

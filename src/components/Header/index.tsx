@@ -6,12 +6,13 @@ import { ShoppingCart } from "@phosphor-icons/react";
 import imgLogo from "/assets/images/logo.svg";
 import { useCart } from "../../hooks/useCartContext";
 
-import { CartState } from "../../interface";
+import { AddressState, CartState } from "../../interface";
 
 import { useNavigate } from "react-router-dom";
 
 export function Header() {
   const { cart } = useCart() as CartState;
+  const { address } = useCart() as AddressState;
   const navigate = useNavigate();
 
   return (
@@ -26,7 +27,13 @@ export function Header() {
         <button type="button" title="Sua localização">
           <MapPin size={22} color="#8047F8" weight="fill" />
 
-          <span>Porto Alegre, RS</span>
+          {address?.data ? (
+            <span>
+              {address?.data?.city}, {address?.data?.state}
+            </span>
+          ) : (
+            <span>Cidade, Estado</span>
+          )}
         </button>
         <button
           type="button"

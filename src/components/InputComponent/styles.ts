@@ -22,7 +22,7 @@ export const ContainerInput = styled.div`
 
     padding: 1.2rem;
 
-    color: ${({ theme }) => theme["base-label"]};
+    color: ${({ theme }) => theme["base-subtitle"]};
     background: transparent;
     border-radius: 4px;
     border: 0;

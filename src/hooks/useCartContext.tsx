@@ -22,6 +22,8 @@ export function ContextCartProvider({ children }: ChildrenProps) {
   const [cart, setCart] = useState<CartItem[]>(newCoffe || []);
   const [amountCoffe, setAmountCoffe] = useState<number>(1);
 
+  const [address, setAddress] = useState({});
+
   return (
     <CartContext.Provider
       value={{
@@ -29,6 +31,8 @@ export function ContextCartProvider({ children }: ChildrenProps) {
         setCart,
         amountCoffe,
         setAmountCoffe,
+        address,
+        setAddress,
       }}
     >
       {children}
