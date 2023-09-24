@@ -126,7 +126,7 @@ export function Checkout() {
     if (cep.length === 8) {
       axios.get(`https://viacep.com.br/ws/${cep}/json/`).then((response) => {
         if (response.data.erro === true) {
-          return alert("Cep Inválido");
+          return AlertError("Cep Inválido");
         }
 
         setState(response.data.uf);
