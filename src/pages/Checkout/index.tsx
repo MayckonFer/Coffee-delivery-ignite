@@ -35,25 +35,13 @@ import { useCart } from "../../hooks/useCartContext";
 import { AddressState, CartState } from "../../interface";
 
 const validationSchema = z.object({
-  cep: z
-    .string()
-    .min(1, { message: "Campo cep não pode está vazio e/ou inválido!" }),
-  street: z
-    .string()
-    .min(1, { message: "Campo rua não pode está vazio e/ou inválido!" }),
-  number: z
-    .string()
-    .min(1, { message: "Campo número não pode está vazio e/ou inválido!" }),
+  cep: z.string().min(1).max(8),
+  street: z.string().min(1),
+  number: z.string().min(1),
   complement: z.string(),
-  district: z
-    .string()
-    .min(1, { message: "Campo  não pode está vazio e/ou inválido!" }),
-  city: z
-    .string()
-    .min(1, { message: "Campo cidade não pode está vazio e/ou inválido!" }),
-  state: z
-    .string()
-    .min(1, { message: "Campo não pode está vazio e/ou inválido!" }),
+  district: z.string().min(1),
+  city: z.string().min(1),
+  state: z.string().min(1),
 });
 
 type ValidationSchema = z.infer<typeof validationSchema>;
@@ -88,6 +76,8 @@ export function Checkout() {
     handleSubmit,
     formState: { errors },
   } = useForm<ValidationSchema>({
+    criteriaMode: "all",
+    mode: "all",
     resolver: zodResolver(validationSchema),
     defaultValues: {
       cep: "",
@@ -161,18 +151,16 @@ export function Checkout() {
                   {...register("cep")}
                   value={cep}
                   onChange={(e) => setCep(e.target.value)}
+                  className={errors.cep ? "error" : ""}
                 />
-                {errors.cep?.message && <span>{errors.cep?.message}</span>}
 
                 <InputComponent
                   placeholder="Rua"
                   {...register("street")}
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
+                  className={errors.street && "error"}
                 />
-                {errors.street?.message && (
-                  <span>{errors.street?.message}</span>
-                )}
 
                 <div className="footer_wrapperInputs">
                   <InputComponent
@@ -180,10 +168,8 @@ export function Checkout() {
                     {...register("number")}
                     value={number}
                     onChange={(e) => setNumber(e.target.value)}
+                    className={errors.number && "error"}
                   />
-                  {errors.number?.message && (
-                    <span>{errors.number?.message}</span>
-                  )}
 
                   <InputComponent
                     textHelp="Opcional"
@@ -191,37 +177,32 @@ export function Checkout() {
                     {...register("complement")}
                     value={complement}
                     onChange={(e) => setComplement(e.target.value)}
+                    className={errors.complement && "error"}
                   />
-                  {errors.complement?.message && (
-                    <span>{errors.complement?.message}</span>
-                  )}
+
                   <InputComponent
                     placeholder="Bairro"
                     {...register("district")}
                     value={district}
                     onChange={(e) => setDistrict(e.target.value)}
+                    className={errors.district && "error"}
                   />
-                  {errors.district?.message && (
-                    <span>{errors.district?.message}</span>
-                  )}
 
                   <InputComponent
                     placeholder="Cidade"
                     {...register("city")}
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
+                    className={errors.city && "error"}
                   />
-                  {errors.city?.message && <span>{errors.city?.message}</span>}
 
                   <InputComponent
                     placeholder="UF"
                     {...register("state")}
                     value={state}
                     onChange={(e) => setState(e.target.value)}
+                    className={errors.state && "error"}
                   />
-                  {errors.state?.message && (
-                    <span>{errors.state?.message}</span>
-                  )}
                 </div>
               </WrapperInputs>
             </FormAdress>

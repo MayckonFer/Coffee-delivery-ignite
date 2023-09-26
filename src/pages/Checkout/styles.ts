@@ -95,10 +95,10 @@ export const WrapperInputs = styled.div`
   }
 
   .error {
-    border: 1px solid ${({ theme }) => theme["red"]};
+    border: 1px solid ${({ theme }) => theme.red};
 
-    ::-webkit-input-placeholder {
-      color: ${({ theme }) => theme["red"]};
+    &::-webkit-input-placeholder {
+      color: ${({ theme }) => theme.red};
     }
   }
 
@@ -107,19 +107,46 @@ export const WrapperInputs = styled.div`
     input[id="cep"] {
       max-width: 20rem;
     }
-
-    div:nth-child(2),
-    input[id="street"] {
-      width: 100%;
-    }
   }
 
   .footer_wrapperInputs {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2.4rem;
 
     @media (min-width: 768px) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2.4rem 1.2rem;
+
+      div {
+        width: initial;
+      }
+
+      div:nth-child(1),
+      input[id="number"] {
+        width: 20rem;
+      }
+
+      div:nth-child(2),
+      input[id="complement"] {
+        flex-grow: 1;
+      }
+
+      div:nth-child(3),
+      input[id="district"] {
+        width: 20rem;
+      }
+
+      div:nth-child(4),
+      input[id="city"] {
+        flex-grow: 1;
+      }
+
+      div:nth-child(5),
+      input[id="state"] {
+        width: 6rem;
+      }
     }
   }
 `;
